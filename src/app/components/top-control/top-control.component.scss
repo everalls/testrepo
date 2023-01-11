@@ -1,0 +1,23 @@
+.container {
+  height: var(--top-menu-height);
+}
+
+.tabs .mat-tab-label.mat-tab-label-active {
+  background-color: #5e70db;
+  opacity: 1 !important;
+}
+.tabs .mat-ink-bar {
+  background-color: #3f51b5 !important;
+}
+
+.logo {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 8px;
+  color: #5065A8;
+  background-color: #F2EEE4;
+  font-size: 25px;
+  font-weight: 500;
+}

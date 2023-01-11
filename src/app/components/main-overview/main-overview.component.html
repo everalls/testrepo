@@ -1,0 +1,47 @@
+<div class="container">
+  <mat-card class="period-dates">
+    <mat-card-header>
+      <mat-card-title>Period</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="dates-line">
+        <div class="date">{{ periodData.From | date }}</div>
+        <div class="dash">-</div>
+        <div class="date">{{ periodData.To | date }}</div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button>Week</button>
+      <button mat-button>Month</button>
+      <button mat-button>Custom</button>
+    </mat-card-actions>
+  </mat-card>
+  <div class="availables">
+    <mat-card class="available-total">
+      <mat-card-header>
+        <mat-card-title>Available Total:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="available-number"
+             [class.positive]="periodData.AvailableFunds.AvailableTotalSpendingRoom >= 0"
+             [class.negative]="periodData.AvailableFunds.AvailableTotalSpendingRoom < 0"
+        >
+        {{ periodData.AvailableFunds.AvailableTotalSpendingRoom }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="available-daily">
+      <mat-card-header>
+        <mat-card-title>Available Daily:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="available-number"
+             [class.positive]="periodData.AvailableFunds.AvailableDailySpendingRoom >= 0"
+             [class.negative]="periodData.AvailableFunds.AvailableDailySpendingRoom < 0"
+        >
+        {{ periodData.AvailableFunds.AvailableDailySpendingRoom }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

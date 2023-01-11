@@ -1,0 +1,64 @@
+$dash-space: 8px;
+.container {
+    background: #fafafa;
+    height: 100%;
+    padding: 12px;
+}
+
+.dates-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 8px;
+}
+
+.dates-line .date {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.5);  
+}
+
+.dates-line .dash {
+  margin-right: $dash-space;
+  margin-left: $dash-space;
+}
+
+.availables {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 16px
+}
+
+.availables .available-total {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.availables .available-daily {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.available-number {
+  color: #f14c52;
+  color: #12c48b;
+  font-size: 24px;
+}
+
+.available-number.positive {
+  color: #12c48b;
+}
+
+.available-number.negative {
+  color: #f14c52;
+}
+
+
+
+
+
