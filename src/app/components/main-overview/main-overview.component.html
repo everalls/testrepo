@@ -19,7 +19,7 @@
   <div class="availables">
     <mat-card class="available-total">
       <mat-card-header>
-        <mat-card-title>Available Total:</mat-card-title>
+        <mat-card-title>Available Total</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="available-number"
@@ -32,7 +32,7 @@
     </mat-card>
     <mat-card class="available-daily">
       <mat-card-header>
-        <mat-card-title>Available Daily:</mat-card-title>
+        <mat-card-title>Available Daily</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="available-number"
@@ -44,4 +44,33 @@
       </mat-card-content>
     </mat-card>
   </div>
+
+  <div class="incomes">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <div class="incomes-card-header">
+          <div class="incomes-card-header-name">
+            Incomes total: 
+          </div>
+          <div class="incomes-card-header-value"
+               [class.positive]="totalIncomes >= 0"
+               [class.negative]="totalIncomes < 0"
+          >
+            {{totalIncomes}}
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+      
+      <div class="income-list-item"
+           *ngFor="let income of totalIncomesDetails" 
+      >
+        <div class="income-list-item-name">{{income.name}}</div>
+        <div class="income-list-item-name">{{income.value}}</div>
+        <div class="income-list-item-name">{{income.date | date}}</div>
+
+      </div>
+  
+    </mat-expansion-panel>
+  
+  </div> 
 </div>

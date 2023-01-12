@@ -45,8 +45,6 @@ $dash-space: 8px;
 }
 
 .available-number {
-  color: #f14c52;
-  color: #12c48b;
   font-size: 24px;
 }
 
@@ -58,6 +56,46 @@ $dash-space: 8px;
   color: #f14c52;
 }
 
+.incomes {
+  margin-top: 16px;
+}
+
+.incomes-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.incomes-card-header-name {
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  line-height: 32px;
+  -webkit-font-smoothing: antialiased;
+  color: #000000;
+  margin-right: 8px;
+}
+.incomes-card-header-value {
+  font-size: 24px;
+}
+
+.incomes-card-header-value.positive {
+  color: #12c48b;
+}
+
+.incomes-card-header-value.negative {
+  color: #f14c52;
+}
+
+.income-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 8px;
+}
 
 
 

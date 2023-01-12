@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Period } from '../types/Period';
+import { PeriodData } from '../types/Period';
 import { periodMock } from '../mocks/period.mock';
 import { cloneObject} from '../utils/utils';
 
@@ -13,12 +13,12 @@ import { cloneObject} from '../utils/utils';
 })
 export class PeriodDataService {
 
-  period: Period;
+  periodData: PeriodData;
 
   constructor() { }
 
-  getPeriod$(): Observable<Period> {
-    this.period = cloneObject(periodMock);
+  getPeriod$(): Observable<PeriodData> {
+    this.periodData = cloneObject(periodMock);
     return of(periodMock)
   }
 }
