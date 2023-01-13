@@ -1,1 +1,9 @@
-<h1>expenses table will be displayed here</h1>
+<!-- TODO [Evgeny] make it sortable table-->
+<h3>It will be robust table with optios to sort, filter, edit...</h3>
+<div class="income-list-item"
+     *ngFor="let income of totalExpensesDetails" 
+>
+  <div class="income-list-item-name">{{income.name}}</div>
+  <div class="income-list-item-value">{{income.value}}</div>
+  <div class="income-list-item-date">{{income.date | date}}</div>
+</div>
