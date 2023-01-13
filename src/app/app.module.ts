@@ -13,6 +13,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -34,6 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
+    MatDividerModule,
+    MatIconModule,
   ],
   providers: [
     MatDatepickerModule

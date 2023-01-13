@@ -44,16 +44,21 @@ $dash-space: 8px;
   margin-left: 8px;
 }
 
-.available-number {
+.overview-number {
   font-size: 24px;
+  font-weight: 400 !important;
 }
 
-.available-number.positive {
-  color: #12c48b;
+.overview-number.positive {
+  color: var(--positive-number-color);
 }
 
-.available-number.negative {
-  color: #f14c52;
+.overview-number.negative {
+  color: var(--negative-number-color);
+}
+
+.starting-budget {
+  margin-top: 16px;
 }
 
 .incomes {
@@ -64,7 +69,18 @@ $dash-space: 8px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-right: 16px;
 }
+
+.incomes-card-header-name-value {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
 
 .incomes-card-header-name {
   font-family: Roboto, sans-serif;
@@ -76,16 +92,9 @@ $dash-space: 8px;
   color: #000000;
   margin-right: 8px;
 }
-.incomes-card-header-value {
-  font-size: 24px;
-}
 
-.incomes-card-header-value.positive {
-  color: #12c48b;
-}
-
-.incomes-card-header-value.negative {
-  color: #f14c52;
+.add-expense {
+  transform: scale(0.8);
 }
 
 .income-list-item {
@@ -95,7 +104,39 @@ $dash-space: 8px;
   justify-content: space-between;
   padding-left: 8px;
   padding-right: 8px;
+  border-bottom: solid thin rgba(0, 0, 0, 0.2);
+  padding-top: 4px;
+  padding-bottom: 4px;
+  
+  .income-list-item-date {
+    width: 100px;
+  }
+
+  .income-list-item-value {
+    width: 50px;
+    margin-right: 16px;
+    margin-left: 16px;
+    text-align: end;
+  }
+
+  .income-list-item-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    flex: 1;
+  }
 }
+
+.manage-expenses-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 16px;
+}
+
+
 
 
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { PeriodData } from '../types/Period';
+import { PeriodData, Transaction } from '../types/Period';
 import { periodMock } from '../mocks/period.mock';
 import { cloneObject} from '../utils/utils';
 
@@ -14,6 +14,8 @@ import { cloneObject} from '../utils/utils';
 export class PeriodDataService {
 
   periodData: PeriodData;
+  totalExpensesDetails: Transaction[];
+
 
   constructor() { }
 
