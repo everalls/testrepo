@@ -1,45 +1,93 @@
 $dash-space: 8px;
+$overview-container-side-margin: 16px;
+
 .container {
     background: #fafafa;
     height: 100%;
-    padding: 12px;
 }
 
-.dates-line {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 8px;
+mat-card.overview-cards {
+  box-shadow: inset 0px 0px 3px 0px dimgrey;
+  border-radius: 16px;
 }
 
-.dates-line .date {
+mat-card.overview-cards mat-card-title {
+  color: dimgrey;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+mat-card.overview-cards.balance mat-card-content {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 30px;
+  color: var(--positive-number-color);
+  opacity: 0.8;
+}
+
+.period-options {
+  background-color: var(--main-color-two);
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.period-options button {
+  color: dimgrey;
+  font-weight: 400;
+}
+
+.period-dates {
+  margin-bottom: 12px;
+  font-size: 9px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.period-dates > div {
   font-family: Roboto, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.1px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.5);  
+  color: dimgrey;
 }
 
-.dates-line .dash {
+.period-dates .dash {
   margin-right: $dash-space;
   margin-left: $dash-space;
 }
+
+.overview-cards-container {
+  margin-left: $overview-container-side-margin;
+  margin-right: $overview-container-side-margin;
+}
+
 
 .availables {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 16px
+  margin-top: 32px
 }
 
-.availables .available-total {
+.availables mat-card.overview-cards mat-card-content {
+  margin-bottom: 32px;
+}
+
+.availables .incomings {
   flex: 1;
   margin-right: 8px;
 }
 
-.availables .available-daily {
+.availables .spendings {
   flex: 1;
   margin-left: 8px;
 }
@@ -47,15 +95,16 @@ $dash-space: 8px;
 .overview-number {
   font-size: 24px;
   font-weight: 400 !important;
+  margin-top: 16px;
 }
 
-.overview-number.positive {
-  color: var(--positive-number-color);
-}
+// .overview-number.positive {
+//   color: var(--positive-number-color);
+// }
 
-.overview-number.negative {
-  color: var(--negative-number-color);
-}
+// .overview-number.negative {
+//   color: var(--negative-number-color);
+// }
 
 .starting-budget {
   margin-top: 16px;
@@ -94,7 +143,9 @@ $dash-space: 8px;
 }
 
 .add-expense {
-  transform: scale(0.8);
+  //transform: scale(0.8);
+  background-color: var(--main-color-one);
+  margin-left: 8px;
 }
 
 .income-list-item {
@@ -133,7 +184,9 @@ $dash-space: 8px;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 16px;
+  //margin-top: 16px;
+  opacity: 0.5;
+
 }
 
 

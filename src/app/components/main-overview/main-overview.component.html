@@ -1,54 +1,87 @@
 <div class="container">
-  <!-- TODO [Evgeny] make custom components instead of mat-card and mat-expandable-panel -->
-  <mat-card class="period-dates">
-    <mat-card-header>
-      <mat-card-title>Period</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="dates-line">
-        <div class="date">{{ periodData.From | date }}</div>
-        <div class="dash">-</div>
-        <div class="date">{{ periodData.To | date }}</div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button>Week</button>
-      <button mat-button>Month</button>
-      <button mat-button>Custom</button>
-    </mat-card-actions>
-  </mat-card>
-  
-  <div class="availables">
-    <mat-card class="available-total">
-      <mat-card-header>
-        <mat-card-title>Available Total</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <!-- TODO [Evgeny] make directive insead of manipulate with classes   -->
-        <div class="overview-number"
-             [class.positive]="periodData.AvailableFunds.AvailableTotalSpendingRoom >= 0"
-             [class.negative]="periodData.AvailableFunds.AvailableTotalSpendingRoom < 0"
-        >
-        {{ periodData.AvailableFunds.AvailableTotalSpendingRoom }}
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="available-daily">
-      <mat-card-header>
-        <mat-card-title>Available Daily</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="overview-number"
-             [class.positive]="periodData.AvailableFunds.AvailableDailySpendingRoom >= 0"
-             [class.negative]="periodData.AvailableFunds.AvailableDailySpendingRoom < 0"
-        >
-        {{ periodData.AvailableFunds.AvailableDailySpendingRoom }}
-        </div>
-      </mat-card-content>
-    </mat-card>
+
+  <div class="period-options">
+    <button mat-button color="primary">Week</button>
+    <button mat-button color="accent">Month</button>
+    <button mat-button color="warn">Period</button>
   </div>
 
-  <div class="starting-budget">
+  <div class="period-dates">
+    <div class="date">{{ periodData.From | date }}</div>
+    <div class="dash">-</div>
+    <div class="date">{{ periodData.To | date }}</div>
+  </div>
+
+  <!-- TODO [Evgeny] make custom components instead of mat-card and mat-expandable-panel -->
+  <div class="overview-cards-container">
+    <mat-card class="overview-cards balance">
+      <mat-card-header>
+        <mat-card-title>Balance:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        1234$
+      </mat-card-content>
+    </mat-card>
+    <div class="availables">
+      <mat-card class="overview-cards incomings">
+        <mat-card-header>
+          <mat-card-title>Incomings:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- TODO [Evgeny] make directive insead of manipulate with classes   -->
+          <div class="overview-number"
+          >
+          1534$
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button class="add-expense" 
+                    mat-mini-fab color="primary"
+                    (click)="onAddExpense($event)" 
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <div class="manage-expenses-list">
+            <button mat-button
+                    (click)="onNavigateToExpensesTable($event)"
+            >
+              More
+            </button>
+            <mat-icon>open_in_new</mat-icon>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card class="overview-cards spendings">
+        <mat-card-header>
+          <mat-card-title>Spendings</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="overview-number"
+          >
+          300$
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button class="add-expense" 
+                    mat-mini-fab color="primary"
+                    (click)="onAddExpense($event)" 
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <div class="manage-expenses-list">
+            <button mat-button
+                    (click)="onNavigateToExpensesTable($event)"
+            >
+              More
+            </button>
+            <mat-icon>open_in_new</mat-icon>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- <div class="starting-budget">
     <mat-card class="available-daily">
       <mat-card-header>
         <mat-card-title>Starting Budget: 
@@ -61,10 +94,10 @@
       </mat-card-header>
      
     </mat-card>
-  </div>
+  </div> -->
 
   <!-- TODO [Evgeny] make one reusable component for incomes and spendings -->
-  <div class="incomes">
+  <!-- <div class="incomes">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <div class="incomes-card-header">
@@ -92,15 +125,15 @@
   
     </mat-expansion-panel>
   
-  </div> 
+  </div>  -->
 
-  <div class="incomes">
+  <!-- <div class="incomes">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <div class="incomes-card-header">
           <div class="incomes-card-header-name-value">
             <div class="incomes-card-header-name">
-              <!-- TODO [Evgeny] make more interesting design for button-->
+             
               Expenses total: 
             </div>
             <div class="overview-number negative"
@@ -120,7 +153,6 @@
       <div class="income-list-item"
            *ngFor="let income of totalExpensesDetails.slice(0,7)" 
       >
-        <!-- TODO [Evgeny] limit maximum lentgh + ellipses -->
         <div class="income-list-item-name">{{income.name}}</div>
         <div class="income-list-item-value">{{income.value}}</div>
         <div class="income-list-item-date">{{income.date | date}}</div>
@@ -137,5 +169,5 @@
   
     </mat-expansion-panel>
   
-  </div> 
+  </div>  -->
 </div>
