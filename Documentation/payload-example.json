@@ -50,7 +50,10 @@
 					{
 						"Id": 13,
 						"Name": "Salary Monthly",
-						"Amount": 1000.0
+						"Amount": 1000.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/13/Details"
 					}
 				],
 				"Totals": 1000.0,
@@ -61,11 +64,28 @@
 					{
 						"Id": 13,
 						"Name": "Salary Monthly",
-						"Amount": 1000.0
+						"Amount": 1000.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/13/Details"
 					}
 				],
 				"Totals": 1000.0,
 				"Names": "Salary Monthly"
+			},
+			"2023-01-9T00:00:00-05:00": {
+				"Data": [
+					{
+						"Id": 14,
+						"Name": "One time salary",
+						"Amount": 500.0,
+						"IsRecurrent": false,
+						"NumberOfOccurencesLeftAfterToday": 0,
+						"DetailsEndpoint": "Incomes/14/Details"
+					}
+				],
+				"Totals": 500.0,
+				"Names": "One time salary"
 			}
 		},
 		"Goals": {},
@@ -75,7 +95,10 @@
 					{
 						"Id": 10,
 						"Name": "Different Utilities",
-						"Amount": 300.0
+						"Amount": 300.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 5,
+						"DetailsEndpoint": "Incomes/10/Details"
 					}
 				],
 				"Totals": 300.0,
@@ -86,7 +109,10 @@
 					{
 						"Id": 5,
 						"Name": "Insurance Ind All Life In",
-						"Amount": 18.89
+						"Amount": 18.89,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 1,
+						"DetailsEndpoint": "Incomes/5/Details"
 					}
 				],
 				"Totals": 18.89,
@@ -97,12 +123,18 @@
 					{
 						"Id": 8,
 						"Name": "Mutual Funds Deposit (Anthony RESP)",
-						"Amount": 100.0
+						"Amount": 100.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 6,
+						"DetailsEndpoint": "Incomes/8/Details"
 					},
 					{
 						"Id": 19,
 						"Name": "Bell Mobile",
-						"Amount": 295.04
+						"Amount": 295.04,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 22,
+						"DetailsEndpoint": "Incomes/19/Details"
 					}
 				],
 				"Totals": 395.04,
@@ -113,7 +145,10 @@
 					{
 						"Id": 24,
 						"Name": "Netflix",
-						"Amount": 21.0
+						"Amount": 21.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 1000,
+						"DetailsEndpoint": "Incomes/24/Details"
 					}
 				],
 				"Totals": 21.0,
@@ -124,7 +159,10 @@
 					{
 						"Id": 2,
 						"Name": "Life Insurance Canada Life",
-						"Amount": 22.68
+						"Amount": 22.68,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 5,
+						"DetailsEndpoint": "Incomes/2/Details"
 					}
 				],
 				"Totals": 22.68,
@@ -135,12 +173,18 @@
 					{
 						"Id": 4,
 						"Name": "VW Finance(Car Lease)",
-						"Amount": 281.36
+						"Amount": 281.36,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 36,
+						"DetailsEndpoint": "Incomes/4/Details"
 					},
 					{
 						"Id": 55,
 						"Name": "Misc Payment MANULIFE",
-						"Amount": 86.03
+						"Amount": 86.03,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 25,
+						"DetailsEndpoint": "Incomes/55/Details"
 					}
 				],
 				"Totals": 367.39,
@@ -151,7 +195,10 @@
 					{
 						"Id": 182,
 						"Name": "Bell Internet",
-						"Amount": 95.99
+						"Amount": 95.99,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/182/Details"
 					}
 				],
 				"Totals": 95.99,
@@ -162,17 +209,26 @@
 					{
 						"Id": 14,
 						"Name": "Wealthsimple",
-						"Amount": 200.0
+						"Amount": 200.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/14/Details"
 					},
 					{
 						"Id": 171,
 						"Name": "Mortgage",
-						"Amount": 1017.08
+						"Amount": 1017.08,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/171/Details"
 					},
 					{
 						"Id": 186,
 						"Name": "Ring Security",
-						"Amount": 15.0
+						"Amount": 15.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/186/Details"
 					}
 				],
 				"Totals": 1232.08,
@@ -183,7 +239,10 @@
 					{
 						"Id": 3,
 						"Name": "TD Insurance (Home Insurance)",
-						"Amount": 76.82
+						"Amount": 76.82,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/3/Details"
 					}
 				],
 				"Totals": 76.82,
@@ -194,12 +253,18 @@
 					{
 						"Id": 8,
 						"Name": "Mutual Funds Deposit (Anthony RESP)",
-						"Amount": 100.0
+						"Amount": 100.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/8/Details"
 					},
 					{
 						"Id": 9,
 						"Name": "Transfer To Savings",
-						"Amount": 300.0
+						"Amount": 300.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/9/Details"
 					}
 				],
 				"Totals": 400.0,
@@ -210,7 +275,10 @@
 					{
 						"Id": 13,
 						"Name": "Wealthsimple",
-						"Amount": 200.0
+						"Amount": 200.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/13/Details"
 					}
 				],
 				"Totals": 200.0,
@@ -221,7 +289,10 @@
 					{
 						"Id": 4,
 						"Name": "VW Finance(Car Lease)",
-						"Amount": 281.36
+						"Amount": 281.36,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/4/Details"
 					}
 				],
 				"Totals": 281.36,
@@ -232,12 +303,18 @@
 					{
 						"Id": 12,
 						"Name": "Bank Monthly Fee",
-						"Amount": 9.95
+						"Amount": 9.95,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/12/Details"
 					},
 					{
 						"Id": 52,
 						"Name": "Insurance CANADALIFE",
-						"Amount": 29.32
+						"Amount": 29.32,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/52/Details"
 					}
 				],
 				"Totals": 39.27,
@@ -248,7 +325,10 @@
 					{
 						"Id": 16,
 						"Name": "Manulife",
-						"Amount": 104.87
+						"Amount": 104.87,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/16/Details"
 					}
 				],
 				"Totals": 104.87,
@@ -259,12 +339,18 @@
 					{
 						"Id": 14,
 						"Name": "Wealthsimple",
-						"Amount": 200.0
+						"Amount": 200.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/14/Details"
 					},
 					{
 						"Id": 171,
 						"Name": "Mortgage",
-						"Amount": 1017.08
+						"Amount": 1017.08,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 171,
+						"DetailsEndpoint": "Incomes/171/Details"
 					}
 				],
 				"Totals": 1217.08,
@@ -275,12 +361,18 @@
 					{
 						"Id": 11,
 						"Name": "Insurance Ind All Ass Mtl",
-						"Amount": 90.14
+						"Amount": 90.14,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 11,
+						"DetailsEndpoint": "Incomes/11/Details"
 					},
 					{
 						"Id": 104,
 						"Name": "Insurance IND ALL LIFE IN",
-						"Amount": 15.87
+						"Amount": 15.87,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 104,
+						"DetailsEndpoint": "Incomes/104/Details"
 					}
 				],
 				"Totals": 106.01,
@@ -291,7 +383,10 @@
 					{
 						"Id": 51,
 						"Name": "Vehicle Insurance (Intact)",
-						"Amount": 131.1
+						"Amount": 131.1,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 51,
+						"DetailsEndpoint": "Incomes/51/Details"
 					}
 				],
 				"Totals": 131.1,
@@ -302,12 +397,18 @@
 					{
 						"Id": 8,
 						"Name": "Mutual Funds Deposit (Anthony RESP)",
-						"Amount": 100.0
+						"Amount": 100.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 8,
+						"DetailsEndpoint": "Incomes/8/Details"
 					},
 					{
 						"Id": 9,
 						"Name": "Transfer To Savings",
-						"Amount": 300.0
+						"Amount": 300.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 9,
+						"DetailsEndpoint": "Incomes/9/Details"
 					}
 				],
 				"Totals": 400.0,
@@ -318,7 +419,10 @@
 					{
 						"Id": 10,
 						"Name": "Different Utilities",
-						"Amount": 300.0
+						"Amount": 300.0,
+						"IsRecurrent": true,
+						"NumberOfOccurencesLeftAfterToday": 10,
+						"DetailsEndpoint": "Incomes/10/Details"
 					}
 				],
 				"Totals": 300.0,
