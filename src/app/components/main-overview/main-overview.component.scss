@@ -33,11 +33,17 @@ mat-card.overview-cards.balance mat-card-content {
   display: flex;
   flex-direction: row;
   justify-content: end;
+  margin-bottom: 64px;
 }
 
 .period-options button {
   color: dimgrey;
   font-weight: 400;
+}
+
+.period-options button:last-child {
+  margin-left: 4px;
+  font-weight: 500;
 }
 
 .period-dates {
