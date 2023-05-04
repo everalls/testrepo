@@ -2,6 +2,21 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## To run the app:
+
+npm install --legacy-peer-deps  
+npm start
+If application didn't automatically load - run in browser http://localhost:3000
+
+First time run will open empty screen with error message, because no authentication.  
+To auntheticate now, do next steps:
+- get tocken from swagger
+- get into the application page in the browser
+- get devTools and run:
+   localStorage.setItem('token', <'token'> where token is taken from swagger (with single quotes and without <>)
+- refresh the page in the broeser
+
+
 ## Available Scripts
 
 In the project directory, you can run:
