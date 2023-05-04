@@ -1,0 +1,70 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  max-width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f9f9f9;
+}
+
+.period-menu-container > div {
+  font-weight: bold;
+  color: #777777;
+  height: 100%;
+  width: 102px;
+  height: 100%;
+}
+
+.period-menu-container > div:nth-child(1) {
+  text-decoration: underline;
+  text-decoration-color: #777777;
+  text-decoration-thickness: 2px;
+}
+
+
+
+.period-menu-container {
+  width: 272px;
+  height: 16px;
+  display: flex;
+  position: absolute;
+  top: 32px;
+  right: 12px;
+  justify-content: space-between;
+}
+
+.incomings-expenses-control-wrapper {
+  display: flex;
+  width: calc(100% - 32px);
+  flex-direction: row;
+  position: absolute;
+  left: 50%;
+  bottom: 64px;
+  transform: translate(-50%, 0);
+  /* margin: auto; */
+  justify-content: space-between;
+}
+
+.incomings-expences-control {
+  width: calc(50% - 32px);
+  height: 120px;
+  background: #FFFFFF;
+  border: 2px solid #EEEEEE;
+  border-radius: 8px;
+}
+
+.expense-modal > .expense-modal-container {
+  width: calc(100% - 32px);
+  background-color: white;
+  border-radius: 7px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+
