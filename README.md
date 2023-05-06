@@ -10,7 +10,7 @@ If application didn't automatically load - run in browser http://localhost:3000
 
 First time run will open empty screen with error message, because no authentication.  
 To auntheticate now, do next steps:
-- get tocken from swagger
+- get token from swagger
 - get into the application page in the browser
 - get devTools and run:
    localStorage.setItem('token', <'token'> where token is taken from swagger (with single quotes and without <>)
