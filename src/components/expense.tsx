@@ -220,11 +220,11 @@ export const Expense = () =>  {
               "Name":name,
               "Recurrence":{
                 "RecurrenceTypeId": recurrenceTypeId,
-                "StartDate": startDatePayload,
+                "StartDate": startDate?.toISOString(),
                 "WeekDay": startDate?.day(),
                 "MonthDay": startDate?.date(),
                 "AnnualDay": startDate?.dayOfYear(),
-                "EndDate":  endDatePayload,
+                "EndDate":  startDate?.toISOString(),
                 "EndAfterTimes": endAfterTimes
               }
             }
