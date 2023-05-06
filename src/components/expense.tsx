@@ -6,12 +6,8 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
-import { log } from "console";
-
-
-//UI:
-// Stop by number of payments: [Text Field]
-// Stop by specific date: [Date Picker]
+import dayOfYear from 'dayjs/plugin/dayOfYear';
+dayjs.extend(dayOfYear);
 
 const recurrenceTypesMap = { // TODO make it dynamic by fetching from API
   "1": "Daily",
@@ -24,10 +20,15 @@ const recurrenceTypesMap = { // TODO make it dynamic by fetching from API
 
 type RecurrenceTypes = keyof typeof recurrenceTypesMap;
 
+const dateFormatToPayload = (date: string ): string => {
+  return dayjs(date).isValid() ? dayjs(date).format('YYYY-MM-DD') : date;
+
+}
+
 export const Expense = () =>  {
 
-  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
-  const [stopDate, setStopDate] = useState<Dayjs | null>(dayjs());
+  const [startDate, setStartDate] = useState<Dayjs|null>(dayjs());
+  const [stopDate, setStopDate] = useState<Dayjs|null>(dayjs());
   const [name, setName] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
   const [recurringOfType, setRecurringOfType] = useState<RecurrenceTypes>("1");
@@ -40,6 +41,18 @@ export const Expense = () =>  {
   const onRecurrentTypeChange = (event: SelectChangeEvent<RecurrenceTypes>) => {
     setRecurringOfType(event.target.value as RecurrenceTypes);
   };
+
+  const resertForm = () => {
+    setStartDate(dayjs());
+    setStopDate(dayjs());
+    setName('');
+    setAmount(0);
+    setRecurringOfType("1");
+    setIsRecurring(false);
+    setNumberOfPayments(1);
+    setStopRecurrencyCondition('stopByNumberOfPayments');
+  }
+
 
   return (
     <Modal className="expense-modal" open={expenseModalOpen}>
@@ -195,24 +208,67 @@ export const Expense = () =>  {
         </Box>
         
         <Button onClick={() => {
+
+        const recurrenceTypeId = isRecurring ? recurringOfType : 0;
+        const startDatePayload = dateFormatToPayload((startDate || '').toString());
+        const endDatePayload = stopRecurrencyCondition === 'stopByDate' ? dateFormatToPayload((stopDate || '').toString()) : null;
+        const endAfterTimes = stopRecurrencyCondition === 'stopByNumberOfPayments' ? numberOfPayments : null;
+        
           
-          let payload = [
-            {"Amount":amount,"Name":name,
-            "Recurrence":{
-                "RecurrenceTypeId":0
+          const payload: any = [ //TODO add type. Need elaborate with backend too.
+            {"Amount":amount,
+              "Name":name,
+              "Recurrence":{
+                "RecurrenceTypeId": recurrenceTypeId,
+                "StartDate": startDatePayload,
+                "WeekDay": startDate?.day(),
+                "MonthDay": startDate?.date(),
+                "AnnualDay": startDate?.dayOfYear(),
+                "EndDate":  endDatePayload,
+                "EndAfterTimes": endAfterTimes
               }
             }
           ];
 
-          //postExpense(payload);
+
+          /*
+          [
+            {
+              "Recurrence": {
+                "RecurrenceTypeId": 0,
+                "WeekDay": 0,
+                "MonthDay": 0,
+                "IsNeverEnd": true,
+                "EndDate": "2023-05-05T20:11:03.613Z",
+                "UpdateFor": 0,
+                "StartDate": "2023-05-05T20:11:03.613Z",
+                "EndAfterTimes": 0,
+                "AnnualDay": "2023-05-05T20:11:03.613Z",
+                "Created": "2023-05-05T20:11:03.613Z",
+                "Updated": "2023-05-05T20:11:03.613Z",
+                "Id": 0
+              },
+              "Amount": 0,
+              "Name": "string",
+              "PeriodFrom": "2023-05-05T20:11:03.613Z",
+              "PeriodTo": "2023-05-05T20:11:03.613Z"
+            }
+          ]
+          */
+
           console.log('payload::: ', payload);
+          postExpense(payload);
           showHideExpense(false);
+          resertForm();
 
         }}
         >
           Save
         </Button>
-        <Button onClick={() => {showHideExpense(false)}}
+        <Button onClick={() => {
+          showHideExpense(false);
+          resertForm();
+        }}
         >
           Cancel
         </Button>

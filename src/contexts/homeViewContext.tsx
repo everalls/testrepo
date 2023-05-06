@@ -40,7 +40,8 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch((HOME_VIEW_API), {
+      //TDOD: add date range. Hardcoding to testing only!
+      const response = await fetch((HOME_VIEW_API + '?from=2023-04-01&to=2023-07-01'), {
         headers: {
            Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
