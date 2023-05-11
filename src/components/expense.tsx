@@ -216,20 +216,36 @@ export const Expense = () =>  {
         
           
           const payload: any = [ //TODO add type. Need elaborate with backend too.
-            {"Amount":amount,
-              "Name":name,
-              "Recurrence":{
-                "RecurrenceTypeId": recurrenceTypeId,
-                "StartDate": startDate?.toISOString(),
-                "WeekDay": startDate?.day(),
-                "MonthDay": startDate?.date(),
-                "AnnualDay": startDate?.dayOfYear(),
-                "EndDate":  startDate?.toISOString(),
-                "EndAfterTimes": endAfterTimes
-              }
+            // {"Amount":amount,
+            //   "Name":name,
+            //   "Recurrence":{
+            //     "RecurrenceTypeId": recurrenceTypeId,
+            //     "StartDate": startDate?.toISOString(),
+            //     "WeekDay": startDate?.day(),
+            //     "MonthDay": startDate?.date(),
+            //     "EndDate":  startDate?.toISOString(),
+            //     "EndAfterTimes": endAfterTimes
+            //   }
+            // },
+
+            {
+              "Recurrence": {
+                "RecurrenceTypeId": 5,
+                "WeekDay": 0,
+                "MonthDay": 1,
+                "EndDate": "2023-05-07T17:33:51.882Z",
+                "StartDate": "2023-05-07T17:33:51.882Z",
+                "EndAfterTimes": 3,
+              },
+              "Amount": 1,
+              "Name": "string1117",
+              "ExpenseDate": "2023-05-07T17:33:51.882Z",
+              "Description": "string"
+              
             }
           ];
-
+          
+          // "AnnualDay": startDate?.toISOString(),
 
           /*
           [
