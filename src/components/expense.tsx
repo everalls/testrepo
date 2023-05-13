@@ -202,28 +202,39 @@ export const Expense = () =>  {
           <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginTop: '16px'}}>
           
             <Button onClick={() => {
-
-            const recurrenceTypeId = isRecurring ? recurringOfType : 0;
-            const startDatePayload = dateFormatToPayload((startDate || '').toString());
-            const endDatePayload = stopRecurrencyCondition === 'stopByDate' ? dateFormatToPayload((stopDate || '').toString()) : null;
-            const endAfterTimes = stopRecurrencyCondition === 'stopByNumberOfPayments' ? numberOfPayments : null;
-            
-              
+              const recurrenceTypeId = isRecurring ? recurringOfType : 0;
+              const startDatePayload = dateFormatToPayload((startDate || '').toString());
+              const endDatePayload = stopRecurrencyCondition === 'stopByDate' ? dateFormatToPayload((stopDate || '').toString()) : null;
+              const endAfterTimes = stopRecurrencyCondition === 'stopByNumberOfPayments' ? numberOfPayments : null;
               const payload: any = [ //TODO add type. Need elaborate with backend too.
-                {"Amount":amount,
+                {
+                  "Amount":amount,
                   "Name":name,
-                  "ExpenseDate": expenseDate?.toISOString(),
                   "Description": name,  //TODO add description field
+                  "ExpenseDate": expenseDate?.toISOString(),
                   "Recurrence":{
-                    "RecurrenceTypeId": recurrenceTypeId,
+                    "RecurrenceTypeId": Number(recurrenceTypeId),
                     "StartDate": startDate?.toISOString(),
-                    "WeekDay": startDate?.day(),
-                    "MonthDay": startDate?.date() || 0 + 1,
+                    "EndAfterTimes": endAfterTimes,
                     "EndDate":  startDate?.toISOString(),
-                    "EndAfterTimes": endAfterTimes
+                    "WeekDay": startDate?.day(),
+                    "MonthDay": startDate?.date() || 0 + 1,  
                   }
-                },
+                }
 
+                // {
+                //   "Amount":amount,
+                //   "Name":name,
+                //   "Description": name,  //TODO add description field
+                //   "ExpenseDate": expenseDate?.toISOString(),
+                //   "Recurrence":{
+                //     "RecurrenceTypeId": recurrenceTypeId,
+                //     "StartDate": startDate?.toISOString(),
+                //     "EndAfterTimes": endAfterTimes,
+                //   }
+                // }
+              ]
+                
                 // {
                 //   "Recurrence": {
                 //     "RecurrenceTypeId": 5,
@@ -239,7 +250,7 @@ export const Expense = () =>  {
                 //   "Description": "string"
                   
                 // }
-              ];
+              // ];
               
               // "AnnualDay": startDate?.toISOString(),
 

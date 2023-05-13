@@ -1,14 +1,15 @@
-import CheckBoxOff from '../assets/checkbox-off.svg';
-import Info from '../assets/info.svg';
+import { useEffect } from 'react';
 
+export type ExpensesProps = {
+  expenses: any; //TODO: typing
+}
 
-// export type AvailableCasheProps = {
-//   value: number;
-//   considerPrevious?: boolean;
-//   previousValue?: number;
-// }
+export  const ExpensesList = (props: ExpensesProps) => {
 
-export  const ExpensesList = () => {
+  useEffect(() => {
+    console.log(props);
+  }, []);
+
   return (
     <div className="available-cash-circle"
          style={{
@@ -20,7 +21,23 @@ export  const ExpensesList = () => {
          }}
         
     >
-      Expenses will be here...
+     {
+      props.expenses.map((expense: any) => {
+        return (
+          <div className="expense-item" key={'' + expense.Id + expense.Date }>
+            <div className="expense-item-date" style={{fontSize: '14px', color: '#999999'}}>
+              {expense.Date}
+            </div>
+            <div className="expense-item-description" style={{fontSize: '16px', color: '#000000'}}>
+              {expense.Name}
+            </div>
+            <div className="expense-item-value" style={{fontSize: '16px', color: '#000000'}}>
+              {expense.Amount}
+            </div>
+          </div>
+        )
+      })
+     }
     </div>
   )
 }

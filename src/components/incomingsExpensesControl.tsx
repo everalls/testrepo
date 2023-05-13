@@ -2,6 +2,7 @@ import ImagePlus from '../assets/plus.svg';
 import ImageList from '../assets/list.svg'
 import { useContext } from 'react';
 import { HomeViewContext } from '../contexts/homeViewContext';
+import { useNavigate } from 'react-router';
 
 export type IncomingsExpencesControlProps = {
   type: 'incoming'|'expence';
@@ -11,8 +12,16 @@ export type IncomingsExpencesControlProps = {
 
 export const IncomingsExpencesControl = (props: IncomingsExpencesControlProps) => {
 
+  const navigate = useNavigate();
+  
+  function navigateToExpenses() {
+    navigate("/expenses");
+  }
 
-  const { showHideExpense } = useContext(HomeViewContext);
+  function navigateToIncomings() {
+    console.log('Will navigate("/incomings"');
+  }
+
 
   return (
     <div  className='incomings-expences-control'
@@ -21,8 +30,12 @@ export const IncomingsExpencesControl = (props: IncomingsExpencesControlProps) =
           }}
     >
       <div className="incomings-expences-icons" style={{padding: '8px'}}>
-        <img src={ImagePlus} alt="Image Plus not found" onClick={() => showHideExpense(true)}/>
-        <img src={ImageList} alt="Image List not found" style = {{marginLeft: '8px'}}/>
+        <img src={ImagePlus} alt="Image Plus not found" onClick={props.onAdd}/>
+        <img  src={ImageList} 
+              alt="Image List not found" 
+              style = {{marginLeft: '8px'}}
+              onClick={props.type === 'expence' ? navigateToExpenses : navigateToIncomings}
+        />
       </div>
       <div className="incomings-expences-value-label"
         style={{

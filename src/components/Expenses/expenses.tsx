@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import { HomeViewContext } from '../../contexts/homeViewContext';
 import '../../App.css';
 import ImageGraph from '../../assets/graph.svg';
@@ -8,10 +8,6 @@ import { ExpensesList } from './expensesList';
 export const Expenses = () => {
 
   const {data, loading, error, fetchData } = useContext(HomeViewContext);
-
-  const avaiableCash = data?.AvailableFunds?.AvailableWithRegisteredMovements || 0; 
-  const totalExpenses = data?.MoneyMovements?.ExpensesTotalForPeriod || 0;
-  const totalIncomings = data?.MoneyMovements?.IncomingsTotalForPeriod || 0;
 
   //Work-around to avoid calling the callback in useEffect twise.
   //It happens because of the way React 18 renders components in development mode, in strict mode.
@@ -24,6 +20,16 @@ export const Expenses = () => {
     }
     renderAfterCalled.current = true;
   }, []);
+
+  
+
+  //TODO: typing
+  const getExpenses: any = () => {
+    const temp1: Record<string, any>  = data?.MoneyMovements?.Expenses?.List;
+    return Object.keys(temp1).reduce((result: any[], key: string) =>  [...result, ...temp1[key].Data.map((item: any) => {item['Date'] = key; return item})], []);
+  }
+
+  const expenses = useMemo(() => getExpenses(), [data]);
 
   if (error) {
     return <div>{error || 'Error occured'}</div>
@@ -40,7 +46,7 @@ export const Expenses = () => {
               width: '100%',
             }}
       />
-      <ExpensesList/>
+      <ExpensesList expenses={expenses}/>
     </div>
   );
 }

@@ -25,6 +25,8 @@ export const MainApp = () => {
     }
     renderAfterCalled.current = true;
   }, []);
+  
+  const { showHideExpense } = useContext(HomeViewContext);
 
   if (error) {
     return <div>{error || 'Error occured'}</div>
@@ -43,8 +45,8 @@ export const MainApp = () => {
       />
       <AvailableCashe value={avaiableCash}/>
       <div className="incomings-expenses-control-wrapper">
-        <IncomingsExpencesControl type='incoming'value={totalIncomings} onAdd={() => console.log('Add incomng')}/>
-        <IncomingsExpencesControl type='expence' value={totalExpenses} onAdd={() => console.log('Add expense')}/>
+        <IncomingsExpencesControl type='incoming'value={totalIncomings} onAdd={() =>  console.log('Add incoming...')}/>
+        <IncomingsExpencesControl type='expence' value={totalExpenses} onAdd={() =>  showHideExpense(true)}/>
       </div>
     </div>
   );
