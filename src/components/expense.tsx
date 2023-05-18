@@ -56,7 +56,6 @@ export const Expense = () =>  {
     setStopRecurrencyCondition('stopByDate');
   }
 
-
   return (
     <Modal className="expense-modal" open={expenseModalOpen}
     slots={{ backdrop: Backdrop }}
@@ -203,8 +202,6 @@ export const Expense = () =>  {
           
             <Button onClick={() => {
               const recurrenceTypeId = isRecurring ? recurringOfType : 0;
-              const startDatePayload = dateFormatToPayload((startDate || '').toString());
-              const endDatePayload = stopRecurrencyCondition === 'stopByDate' ? dateFormatToPayload((stopDate || '').toString()) : null;
               const endAfterTimes = stopRecurrencyCondition === 'stopByNumberOfPayments' ? numberOfPayments : null;
               const payload: any = [ //TODO add type. Need elaborate with backend too.
                 {
@@ -220,70 +217,11 @@ export const Expense = () =>  {
                     "WeekDay": startDate?.day(),
                     "MonthDay": startDate?.date() || 0 + 1,  
                   }
-                }
-
-                // {
-                //   "Amount":amount,
-                //   "Name":name,
-                //   "Description": name,  //TODO add description field
-                //   "ExpenseDate": expenseDate?.toISOString(),
-                //   "Recurrence":{
-                //     "RecurrenceTypeId": recurrenceTypeId,
-                //     "StartDate": startDate?.toISOString(),
-                //     "EndAfterTimes": endAfterTimes,
-                //   }
-                // }
+                } 
               ]
-                
-                // {
-                //   "Recurrence": {
-                //     "RecurrenceTypeId": 5,
-                //     "WeekDay": 0,
-                //     "MonthDay": 1,
-                //     "EndDate": "2023-05-07T17:33:51.882Z",
-                //     "StartDate": "2023-05-07T17:33:51.882Z",
-                //     "EndAfterTimes": 3,
-                //   },
-                //   "Amount": 1,
-                //   "Name": "string1117",
-                //   "ExpenseDate": "2023-05-07T17:33:51.882Z",
-                //   "Description": "string"
-                  
-                // }
-              // ];
-              
-              // "AnnualDay": startDate?.toISOString(),
-
-              /*
-              [
-                {
-                  "Recurrence": {
-                    "RecurrenceTypeId": 0,
-                    "WeekDay": 0,
-                    "MonthDay": 0,
-                    "IsNeverEnd": true,
-                    "EndDate": "2023-05-05T20:11:03.613Z",
-                    "UpdateFor": 0,
-                    "StartDate": "2023-05-05T20:11:03.613Z",
-                    "EndAfterTimes": 0,
-                    "AnnualDay": "2023-05-05T20:11:03.613Z",
-                    "Created": "2023-05-05T20:11:03.613Z",
-                    "Updated": "2023-05-05T20:11:03.613Z",
-                    "Id": 0
-                  },
-                  "Amount": 0,
-                  "Name": "string",
-                  "PeriodFrom": "2023-05-05T20:11:03.613Z",
-                  "PeriodTo": "2023-05-05T20:11:03.613Z"
-                }
-              ]
-              */
-
-              console.log('payload::: ', payload);
               postExpense(payload);
               showHideExpense(false);
               resertForm();
-
             }}
             >
               Save
