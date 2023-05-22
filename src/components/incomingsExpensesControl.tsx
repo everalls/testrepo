@@ -26,7 +26,12 @@ export const IncomingsExpencesControl = (props: IncomingsExpencesControlProps) =
   return (
     <div  className='incomings-expences-control'
           style={{
-            position: 'relative'
+            position: 'relative',
+            width: 'calc(50% - 32px)',
+            height: '120px',
+            background: '#FFFFFF',
+            border: '2px solid #EEEEEE',
+            borderRadius: '8px',
           }}
     >
       <div className="incomings-expences-icons" style={{padding: '8px'}}>

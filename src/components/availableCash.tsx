@@ -12,11 +12,7 @@ export  const AvailableCashe = (props: AvailableCasheProps) => {
   return (
     <div className="available-cash-circle"
          style={{
-          position: 'absolute',
-          top: '232px',
-          left: '50%',
-          transform: 'translate(-50%, 0)',
-          width: 'calc(100% - 120px)',
+          width: '100%',
           border: '#16BFFA solid 8px',
           aspectRatio: '1/1',
           borderRadius: '50%',

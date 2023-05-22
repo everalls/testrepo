@@ -4,6 +4,8 @@ import '../../App.css';
 import ImageGraph from '../../assets/graph.svg';
 import { PeriodMenu } from '../periodMenu';
 import { ExpensesList } from './expensesList';
+import { log } from 'console';
+import { logDOM } from '@testing-library/react';
 
 export const Expenses = () => {
 
@@ -25,28 +27,20 @@ export const Expenses = () => {
 
   //TODO: typing
   const getExpenses: any = () => {
+    console.log('data:::', data);
     const temp1: Record<string, any>  = data?.MoneyMovements?.Expenses?.List;
     return Object.keys(temp1).reduce((result: any[], key: string) =>  [...result, ...temp1[key].Data.map((item: any) => {item['Date'] = key; return item})], []);
   }
 
   const expenses = useMemo(() => getExpenses(), [data]);
 
+  const { showHideExpense } = useContext(HomeViewContext);
+
   if (error) {
     return <div>{error || 'Error occured'}</div>
   }
 
   return (
-    <div className="container"> 
-      <PeriodMenu/>
-      <img  src={ImageGraph} 
-            alt="no graph image" 
-            style={{
-              position: 'absolute',
-              top: '100px',
-              width: '100%',
-            }}
-      />
-      <ExpensesList expenses={expenses}/>
-    </div>
+      <ExpensesList expenses={expenses} onExpenceClick={() => showHideExpense(true)}/>
   );
 }

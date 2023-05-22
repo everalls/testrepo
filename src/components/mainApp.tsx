@@ -33,18 +33,38 @@ export const MainApp = () => {
   }
 
   return (
-    <div className="container"> 
-      <PeriodMenu/>
-      <img  src={ImageGraph} 
-            alt="no graph image" 
+    <div className="home-page-container"
+         style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#f9f9f9'
+         }}
+    >    
+      <div className="available-cash-wrapper"
             style={{
               position: 'absolute',
-              top: '100px',
-              width: '100%',
+              top: '24px',
+              left: '50%',
+              transform: 'translate(-50%, 0)',
+              width: 'calc(100% - 120px)',
+
             }}
-      />
-      <AvailableCashe value={avaiableCash}/>
-      <div className="incomings-expenses-control-wrapper">
+      >
+        <AvailableCashe value={avaiableCash}/>
+      </div> 
+      <div className="incomings-expenses-control-wrapper"
+            style={{
+              display: 'flex',
+              width: 'calc(100% - 32px)',
+              flexDirection: 'row',
+              position: 'absolute',
+              left: '50%',
+              bottom: '64px',
+              transform: 'translate(-50%, 0)',
+              justifyContent: 'space-between',
+            }}
+      
+      >
         <IncomingsExpencesControl type='incoming'value={totalIncomings} onAdd={() =>  console.log('Add incoming...')}/>
         <IncomingsExpencesControl type='expence' value={totalExpenses} onAdd={() =>  showHideExpense(true)}/>
       </div>

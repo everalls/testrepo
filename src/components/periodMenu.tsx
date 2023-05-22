@@ -4,11 +4,7 @@ export type PeriodMenuProps = {
 
 export const PeriodMenu = (props: PeriodMenuProps) => {
   return (
-    <div style={{
-          width: '240px',
-          height: '11px',
-         }}
-         className='period-menu-container'
+    <div className='period-menu-container'
     >
       <div>Week</div>
       <div>Month</div>
