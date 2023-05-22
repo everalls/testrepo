@@ -3,7 +3,11 @@ import dayjs, { Dayjs } from 'dayjs';
 import { IconButton, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AlarmIcon from '@mui/icons-material/Alarm';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddShoppingCartIcon from '@mui/icons-material/';
+import DynamicFeedOutlinedIcon from '@mui/icons-material/DynamicFeedOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+
 
 
 export type ExpensesProps = {
@@ -35,6 +39,7 @@ export  const ExpensesList = (props: ExpensesProps) => {
                     border: '2px solid rgb(238, 238, 238)',
                     borderRadius: '8px',
                     padding: '16px',
+                    paddingBottom: '0px',
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -53,18 +58,17 @@ export  const ExpensesList = (props: ExpensesProps) => {
               <div className="expense-item-description" style={{fontSize: '16px', color: '#000000'}}>
                 {expense.Name}
               </div>
-              <Stack direction="row" spacing={1}>
+              <Stack direction="row" spacing={2} sx={{marginTop: '16px'}}>
+              <IconButton aria-label="delete" size="small">
+                  <DynamicFeedOutlinedIcon fontSize="small" fontWeight="100" color="primary"/>
+                </IconButton>
+                
                 <IconButton aria-label="delete" size="small">
-                  <DeleteIcon fontSize="inherit" />
+                  <EditOutlinedIcon fontSize="small" fontWeight="100" color="primary" />
                 </IconButton>
+  
                 <IconButton aria-label="delete" size="small">
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
-                <IconButton aria-label="delete" size="large">
-                  <DeleteIcon />
-                </IconButton>
-                <IconButton aria-label="delete" size="large">
-                  <DeleteIcon fontSize="inherit" />
+                  <DeleteOutlinedIcon fontSize="small" fontWeight="100" color="primary"/>
                 </IconButton>
               </Stack>
             
