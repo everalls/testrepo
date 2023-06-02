@@ -21,7 +21,7 @@ interface HomeViewContext {
   endDate: string;
   fetchData: () => void;
   postExpense: (payload: any) => void;
-  deleteExpense: (id: number, date: string) => void;
+  deleteExpense: (id: number, date: string, isRecurrent: boolean) => void;
   extractExpenses: () => Expense[];
   expenseModalOpen: boolean;
   showHideExpense: (isOpen: boolean) => void;
@@ -42,7 +42,7 @@ export const HomeViewContext = createContext<HomeViewContext>({
   endDate: endDate,
   fetchData: () => {},
   postExpense: (payload: any) => {},
-  deleteExpense: (id: number, date: string) => {},
+  deleteExpense: (id: number, date: string, isRecurrent: boolean) => {},
   extractExpenses: ():Expense[]  =>  [],
   expenseModalOpen: false,
   showHideExpense: (isOpen: boolean) => {},
@@ -104,10 +104,12 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
     }
   }
 
-  const deleteExpense = async (id: number, date: string) => { //TODO add type 
+  const deleteExpense = async (id: number, date: string, isRecurrent: boolean ) => { //TODO add type 
     try {
       setLoading(true);
-      const response = await fetch((EXPENSE_POST_API + '/' + id + '/2023-04-08'), {
+      const baseDeleteUrl = EXPENSE_POST_API + '/' + id + '/' + 0;
+      const url = isRecurrent ? baseDeleteUrl : baseDeleteUrl + '/' + date;
+      const response = await fetch((url), {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,

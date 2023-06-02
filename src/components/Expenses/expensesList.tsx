@@ -9,6 +9,7 @@ import { Expense } from '../../types';
 import { useNavigate } from 'react-router';
 import { HomeViewContext } from '../../contexts/homeViewContext';
 import { ConfirmationDialog } from '../common/confirmationDialog';
+import { dateToParams } from '../../commonCode/utils';
 
 
 
@@ -24,18 +25,18 @@ export  const ExpensesList = (props: ExpensesListProps) => {
   const { deleteExpense } = useContext(HomeViewContext);
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [expenseToDelete, setExpenseToDelete] = useState<{id: number, date: string}>({id: 0, date: ''});
+  const [expenseToDelete, setExpenseToDelete] = useState<{id: number, date: string, isRecurrent: boolean}>({id: 0, date: '', isRecurrent: false});
 
 
   const handleDelete = (expense: any)=>  { //TODO: use type
-    setExpenseToDelete({id: expense.Id, date: expense.Date});  
+    setExpenseToDelete({id: expense.Id, date: dateToParams(expense.Date), isRecurrent: expense.TotalOccurrenses > 1});  
     setOpenDeleteDialog(true);
   }
   const proceedDelete = (confirmed: boolean) => {
     setOpenDeleteDialog(false);
     if (confirmed) {
-      //deleteExpense(id, date);
-      console.log('Delete expense with id and date: ',expenseToDelete.id, expenseToDelete.date);
+      console.log('Delete expense with id and date: ',expenseToDelete);
+      deleteExpense(expenseToDelete.id, expenseToDelete.date, expenseToDelete.isRecurrent);
     }
   }
   

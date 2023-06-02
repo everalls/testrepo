@@ -23,6 +23,7 @@ type RecurrenceTypes = keyof typeof recurrenceTypesMap;
 
 export const Expense = () =>  {
   
+  const [expense, setExpense] = useState<any|null>(null); //TODO: use type
   const [expenseDate, setExpenseDate] = useState<Dayjs|null>(dayjs());
   const [startDate, setStartDate] = useState<Dayjs|null>(dayjs());
   const [stopDate, setStopDate] = useState<Dayjs|null>(dayjs());
@@ -63,7 +64,7 @@ export const Expense = () =>  {
     slots={{ backdrop: Backdrop }}
         slotProps={{
           backdrop: {
-            timeout: 500,
+            timeout: 700,
           },
         }}>
       <Fade in={expenseModalOpen}>
