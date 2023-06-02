@@ -22,6 +22,7 @@ export const IncomingsExpencesControl = (props: IncomingsExpencesControlProps) =
     console.log('Will navigate("/incomings"');
   }
 
+  const { expenseId } = useContext(HomeViewContext);
 
   return (
     <div  className='incomings-expences-control'

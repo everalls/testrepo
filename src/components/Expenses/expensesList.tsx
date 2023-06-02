@@ -1,26 +1,44 @@
-import { useEffect } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import { useContext, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { IconButton, Stack } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AlarmIcon from '@mui/icons-material/Alarm';
-import AddShoppingCartIcon from '@mui/icons-material/';
+
 import DynamicFeedOutlinedIcon from '@mui/icons-material/DynamicFeedOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { Expense } from '../../types';
+import { useNavigate } from 'react-router';
+import { HomeViewContext } from '../../contexts/homeViewContext';
+import { ConfirmationDialog } from '../common/confirmationDialog';
 
 
 
-export type ExpensesProps = {
-  expenses: any; //TODO: typing
+export type ExpensesListProps = {
+  expenses: Expense[];
   onExpenceClick?: () => void;
 }
 
-export  const ExpensesList = (props: ExpensesProps) => {
+export  const ExpensesList = (props: ExpensesListProps) => {
 
-  useEffect(() => {
-    console.log(props);
-  }, []);
+  const navigate = useNavigate();
 
+  const { deleteExpense } = useContext(HomeViewContext);
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [expenseToDelete, setExpenseToDelete] = useState<{id: number, date: string}>({id: 0, date: ''});
+
+
+  const handleDelete = (expense: any)=>  { //TODO: use type
+    setExpenseToDelete({id: expense.Id, date: expense.Date});  
+    setOpenDeleteDialog(true);
+  }
+  const proceedDelete = (confirmed: boolean) => {
+    setOpenDeleteDialog(false);
+    if (confirmed) {
+      //deleteExpense(id, date);
+      console.log('Delete expense with id and date: ',expenseToDelete.id, expenseToDelete.date);
+    }
+  }
+  
   return (
     <div className="expenses-container"
          style={{
@@ -30,8 +48,14 @@ export  const ExpensesList = (props: ExpensesProps) => {
          }}
         
     >
+      <ConfirmationDialog
+                title="Delete expense"
+                message="Are you sure you want to delete this expense?"
+                open={openDeleteDialog}
+                onClose={proceedDelete}
+            />
      {
-      props.expenses.map((expense: any) => { //TODO: make component
+      props.expenses.map((expense: Expense) => { //TODO: make component(?)
         return (
           <div className="expense-item hoverable-box" key={'' + expense.Id + expense.Date }
                 style={{
@@ -44,7 +68,6 @@ export  const ExpensesList = (props: ExpensesProps) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}
-                  onClick={props.onExpenceClick}
           >
             <div className="left-side-details"
                   style={{
@@ -59,16 +82,18 @@ export  const ExpensesList = (props: ExpensesProps) => {
                 {expense.Name}
               </div>
               <Stack direction="row" spacing={2} sx={{marginTop: '16px'}}>
-              <IconButton aria-label="delete" size="small">
-                  <DynamicFeedOutlinedIcon fontSize="small" fontWeight="100" color="primary"/>
-                </IconButton>
+               {expense.TotalOccurrenses > 1 && 
+                <IconButton aria-label="delete" size="small"  onClick={() => navigate(`/recurrent-expenses/${expense.Id}`)}>
+                    <DynamicFeedOutlinedIcon fontSize="small" fontWeight="100" color="primary"/>
+                  </IconButton>
+               }
                 
                 <IconButton aria-label="delete" size="small">
                   <EditOutlinedIcon fontSize="small" fontWeight="100" color="primary" />
                 </IconButton>
   
-                <IconButton aria-label="delete" size="small">
-                  <DeleteOutlinedIcon fontSize="small" fontWeight="100" color="primary"/>
+                <IconButton aria-label="delete" size="small" onClick={() => handleDelete(expense)}>
+                  <DeleteOutlinedIcon fontSize="small" fontWeight="100" color="primary" />
                 </IconButton>
               </Stack>
             

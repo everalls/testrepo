@@ -1,5 +1,5 @@
 import { Backdrop, Box, Button, Checkbox, Collapse, Fade, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, SelectChangeEvent, Switch, bottomNavigationActionClasses } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HomeViewContext } from "../contexts/homeViewContext";
 import TextField from '@mui/material/TextField';
 import { DatePicker } from "@mui/x-date-pickers";
@@ -21,11 +21,6 @@ const recurrenceTypesMap = { // TODO make it dynamic by fetching from API
 
 type RecurrenceTypes = keyof typeof recurrenceTypesMap;
 
-const dateFormatToPayload = (date: string ): string => {
-  return dayjs(date).isValid() ? dayjs(date).format('YYYY-MM-DD') : date;
-
-}
-
 export const Expense = () =>  {
   
   const [expenseDate, setExpenseDate] = useState<Dayjs|null>(dayjs());
@@ -38,8 +33,15 @@ export const Expense = () =>  {
   const [numberOfPayments, setNumberOfPayments] = useState<number>(1);
   const [stopRecurrencyCondition, setStopRecurrencyCondition] = useState<'stopByNumberOfPayments' | 'stopByDate'>('stopByNumberOfPayments');
 
-  const {data, loading, error, postExpense, expenseModalOpen, showHideExpense } = useContext(HomeViewContext);
+  const {data, loading, error, postExpense, expenseModalOpen, showHideExpense, expenseId } = useContext(HomeViewContext);
   
+  useEffect(() => {
+    console.log('Expense modal open');
+    return () => {
+      console.log('Exit modal')
+    };
+  }, []);
+
   const onRecurrentTypeChange = (event: SelectChangeEvent<RecurrenceTypes>) => {
     setRecurringOfType(event.target.value as RecurrenceTypes);
   };

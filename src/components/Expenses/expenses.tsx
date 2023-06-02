@@ -6,10 +6,11 @@ import { PeriodMenu } from '../periodMenu';
 import { ExpensesList } from './expensesList';
 import { log } from 'console';
 import { logDOM } from '@testing-library/react';
+import { Expense } from '../../types';
 
 export const Expenses = () => {
 
-  const {data, loading, error, fetchData } = useContext(HomeViewContext);
+  const {data, error, fetchData, extractExpenses } = useContext(HomeViewContext);
 
   //Work-around to avoid calling the callback in useEffect twise.
   //It happens because of the way React 18 renders components in development mode, in strict mode.
@@ -23,24 +24,27 @@ export const Expenses = () => {
     renderAfterCalled.current = true;
   }, []);
 
+
+  const expenses = useMemo(() => {
+    const exp = extractExpenses();
+    console.log('Expenses: ', exp);
+    return exp;
+  }, [data]);
+
   
-
-  //TODO: typing
-  const getExpenses: any = () => {
-    console.log('data:::', data);
-    const temp1: Record<string, any>  = data?.MoneyMovements?.Expenses?.List;
-    return Object.keys(temp1).reduce((result: any[], key: string) =>  [...result, ...temp1[key].Data.map((item: any) => {item['Date'] = key; return item})], []);
-  }
-
-  const expenses = useMemo(() => getExpenses(), [data]);
-
-  const { showHideExpense } = useContext(HomeViewContext);
-
   if (error) {
     return <div>{error || 'Error occured'}</div>
   }
 
   return (
-      <ExpensesList expenses={expenses} onExpenceClick={() => showHideExpense(true)}/>
+    <>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginTop: '16px',
+    }}>Expenses</div>
+      <ExpensesList expenses={expenses}/>
+    </>
   );
 }
