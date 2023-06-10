@@ -15,14 +15,14 @@ import { dateToParams } from '../../commonCode/utils';
 
 export type ExpensesListProps = {
   expenses: Expense[];
-  onExpenceClick?: () => void;
+  isRecurrent?: boolean;
 }
 
 export  const ExpensesList = (props: ExpensesListProps) => {
 
   const navigate = useNavigate();
 
-  const { deleteExpense } = useContext(HomeViewContext);
+  const { deleteExpense, populateExpenseUpdateDialog } = useContext(HomeViewContext);
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [expenseToDelete, setExpenseToDelete] = useState<{id: number, date: string, isRecurrent: boolean}>({id: 0, date: '', isRecurrent: false});
@@ -35,7 +35,6 @@ export  const ExpensesList = (props: ExpensesListProps) => {
   const proceedDelete = (confirmed: boolean) => {
     setOpenDeleteDialog(false);
     if (confirmed) {
-      console.log('Delete expense with id and date: ',expenseToDelete);
       deleteExpense(expenseToDelete.id, expenseToDelete.date, expenseToDelete.isRecurrent);
     }
   }
@@ -54,7 +53,7 @@ export  const ExpensesList = (props: ExpensesListProps) => {
                 message="Are you sure you want to delete this expense?"
                 open={openDeleteDialog}
                 onClose={proceedDelete}
-            />
+      />
      {
       props.expenses.map((expense: Expense) => { //TODO: make component(?)
         return (
@@ -64,7 +63,7 @@ export  const ExpensesList = (props: ExpensesListProps) => {
                     border: '2px solid rgb(238, 238, 238)',
                     borderRadius: '8px',
                     padding: '16px',
-                    paddingBottom: '0px',
+                    paddingBottom: props.isRecurrent ? '16px' : '0px',
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -82,21 +81,29 @@ export  const ExpensesList = (props: ExpensesListProps) => {
               <div className="expense-item-description" style={{fontSize: '16px', color: '#000000'}}>
                 {expense.Name}
               </div>
-              <Stack direction="row" spacing={2} sx={{marginTop: '16px'}}>
-               {expense.TotalOccurrenses > 1 && 
-                <IconButton aria-label="delete" size="small"  onClick={() => navigate(`/recurrent-expenses/${expense.Id}`)}>
-                    <DynamicFeedOutlinedIcon fontSize="small" fontWeight="100" color="primary"/>
+              {!props.isRecurrent && // cae of list of occurences of apecific expense
+                <Stack direction="row" spacing={2} sx={{marginTop: '16px'}}>
+                {expense.TotalOccurrenses > 1 && // case of recurrent expense
+                  <IconButton aria-label="delete" size="small"  onClick={() => navigate(`/recurrent-expenses/${expense.Id}`)}>
+                      <DynamicFeedOutlinedIcon fontSize="small" fontWeight="100" color="primary"/>
+                    </IconButton>
+                }
+                {!(expense.TotalOccurrenses > 1) && 
+                  <IconButton aria-label="delete" size="small">
+                    <EditOutlinedIcon fontSize="small" fontWeight="100" color="primary" onClick={() => populateExpenseUpdateDialog(expense.Id)}/>
                   </IconButton>
-               }
+                }
                 
-                <IconButton aria-label="delete" size="small">
-                  <EditOutlinedIcon fontSize="small" fontWeight="100" color="primary" />
-                </IconButton>
-  
-                <IconButton aria-label="delete" size="small" onClick={() => handleDelete(expense)}>
-                  <DeleteOutlinedIcon fontSize="small" fontWeight="100" color="primary" />
-                </IconButton>
-              </Stack>
+    
+                {!(expense.TotalOccurrenses > 1) &&
+                  <IconButton aria-label="delete" size="small" onClick={() => handleDelete(expense)}>
+                    <DeleteOutlinedIcon fontSize="small" fontWeight="100" color="primary" />
+                  </IconButton>
+                }
+                
+                </Stack>
+              }
+               
             
             </div>
               <div className="right-side-details"
