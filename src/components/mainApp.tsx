@@ -26,11 +26,10 @@ export const MainApp = () => {
     renderAfterCalled.current = true;
   }, []);
   
-  const { showHideExpense, setExpenseId } = useContext(HomeViewContext);
+  const { populateExpenseCreateDialog } = useContext(HomeViewContext);
 
   const handleOnAddExpense = () => {
-    setExpenseId(null);
-    showHideExpense(true);
+    populateExpenseCreateDialog();
   }
 
   if (error) {

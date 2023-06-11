@@ -1,13 +1,12 @@
-import { Backdrop, Box, Button, Checkbox, Collapse, Fade, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, SelectChangeEvent, Switch, bottomNavigationActionClasses } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
-import { HomeViewContext } from "../contexts/homeViewContext";
+import { Backdrop, Box, Button, Collapse, Fade, FormControl, FormControlLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, SelectChangeEvent, Switch } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import { DatePicker } from "@mui/x-date-pickers";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { Dayjs } from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
-import { log } from "console";
+import { useContext, useEffect, useState } from "react";
+import { HomeViewContext } from "../contexts/homeViewContext";
 dayjs.extend(dayOfYear);
 
 const recurrenceTypesMap = { // TODO make it dynamic by fetching from API
@@ -34,30 +33,67 @@ export const Expense = () =>  {
   const [numberOfPayments, setNumberOfPayments] = useState<number>(1);
   const [stopRecurrencyCondition, setStopRecurrencyCondition] = useState<'stopByNumberOfPayments' | 'stopByDate'>('stopByNumberOfPayments');
 
-  const {data, loading, error, postExpense, expenseModalOpen, showHideExpense, expenseId } = useContext(HomeViewContext);
+  const {data, loading, error, postExpense, putExpense, expenseModalOpen, showHideExpense, expenseId, currentExpense, expenseOpType } = useContext(HomeViewContext);
   
-  useEffect(() => {
-    console.log('Expense modal open');
-    return () => {
-      console.log('Exit modal')
-    };
-  }, []);
-
   const onRecurrentTypeChange = (event: SelectChangeEvent<RecurrenceTypes>) => {
     setRecurringOfType(event.target.value as RecurrenceTypes);
   };
 
-  const resertForm = () => {
-    setExpenseDate(dayjs());
-    setStartDate(dayjs());
-    setStopDate(dayjs());
-    setName('');
-    setAmount(0);
-    setRecurringOfType("1");
-    setIsRecurring(false);
-    setNumberOfPayments(1);
-    setStopRecurrencyCondition('stopByDate');
+  const updateRecurrentState = () => {
+    if (!currentExpense) {
+      setIsRecurring(false);
+      setRecurringOfType("1");
+
+    } else {
+      let recurrentType = currentExpense?.Recurrence?.RecurrenceTypeId;
+      if (recurrentType && recurrentType > 0) {
+        setIsRecurring(true);
+        setRecurringOfType(recurrentType.toString());
+      } else {
+        setIsRecurring(false);
+        setRecurringOfType("1");
+      }
+    }
   }
+
+  const updateStopDate = () => { 
+    if (!currentExpense) {
+      setStopDate(null);
+    } else {
+      const stopDate = currentExpense?.Recurrence?.StopDate;
+      if (stopDate) {
+        setStopDate(dayjs(stopDate));
+      } else {
+        setStopDate(null);
+      }
+    }
+  }
+
+  const updateStopRecurrencyCondition = () => {
+    const endAfterTimes = currentExpense?.Recurrence?.EndAfterTimes;
+    console.log('endAfterTimes expense:::', currentExpense);
+    console.log('endAfterTimes:::', endAfterTimes);
+    endAfterTimes && (endAfterTimes > 0) ? setStopRecurrencyCondition('stopByNumberOfPayments') : setStopRecurrencyCondition('stopByDate');
+    console.log('stopRecurrencyCondition:::', stopRecurrencyCondition);
+  }
+  
+  const resertForm = () => {
+    !currentExpense ? setExpenseDate(dayjs()) : setExpenseDate(dayjs(currentExpense?.Created));
+    !currentExpense ? setStartDate(dayjs()) : setStartDate(dayjs(currentExpense?.Recurrence?.StartDate));
+    updateStopDate();
+    !currentExpense ? setName('') : setName(currentExpense?.Name);
+    !currentExpense ? setAmount(0) : setAmount(currentExpense?.Amount);
+    updateRecurrentState();
+    setNumberOfPayments(currentExpense?.Recurrence?.EndAfterTimes || 1);
+    updateStopRecurrencyCondition();
+
+    console.log('currentExpense:::', currentExpense);
+  };
+  
+  useEffect(() => {
+    resertForm();
+  }, [currentExpense]);
+  
 
   return (
     <Modal className="expense-modal" open={expenseModalOpen}
@@ -71,7 +107,7 @@ export const Expense = () =>  {
         <div className="expense-modal-container">
           <h4 style={{marginTop: '8px', marginBottom: '24px', color: '#1976d2',fontSize: '14px'}}
           >
-            New Expense
+            { !currentExpense ? 'New Expense' : 'Edit Expense'}
           </h4>
           <Box
             component="form"
@@ -154,7 +190,7 @@ export const Expense = () =>  {
                 </LocalizationProvider>
 
                 <RadioGroup
-                  defaultValue="stopByDate"
+                  defaultValue={stopRecurrencyCondition}
                   name="radio-buttons-group"
                 >
                 <div style={{color: '#bbbbbb', fontSize: '14px', fontWeight: 'bold', padding: '16px', paddingTop: '0px'}}>Stop conditions:</div>
@@ -211,18 +247,18 @@ export const Expense = () =>  {
                   "Amount":amount,
                   "Name":name,
                   "Description": name,  //TODO add description field
-                  "ExpenseDate": expenseDate?.toISOString(),
+                  "MovementsDate": expenseDate?.toISOString(),
                   "Recurrence":{
                     "RecurrenceTypeId": Number(recurrenceTypeId),
                     "StartDate": startDate?.toISOString(),
                     "EndAfterTimes": endAfterTimes,
-                    "EndDate":  startDate?.toISOString(),
+                    "EndDate":  stopDate?.toISOString(),
                     "WeekDay": startDate?.day(),
                     "MonthDay": startDate?.date() || 0 + 1,  
                   }
                 } 
               ]
-              postExpense(payload);
+              expenseOpType === 'create' ? postExpense(payload) : putExpense([{...payload[0], Id: currentExpense.Id}]);
               showHideExpense(false);
               resertForm();
             }}

@@ -1,6 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { HomeView, getUrl, HOME_VIEW_API, EXPENSE_POST_API, Expense } from "../types";
 import dayjs, { Dayjs } from 'dayjs';
+import { log } from "console";
+import { type } from "os";
+
+type ExpenseOpType = 'create' | 'update';
 
 
 const dateFormatToPayload = (date: string ): string => {
@@ -21,12 +25,17 @@ interface HomeViewContext {
   endDate: string;
   fetchData: () => void;
   postExpense: (payload: any) => void;
+  putExpense: (payload: any) => void;
   deleteExpense: (id: number, date: string, isRecurrent: boolean) => void;
   extractExpenses: () => Expense[];
   expenseModalOpen: boolean;
   showHideExpense: (isOpen: boolean) => void;
   expenseId: number | null;
   setExpenseId: (id: number | null) => void;
+  currentExpense: any | null; //TODO: use type;
+  populateExpenseUpdateDialog: (id: number) => void;
+  populateExpenseCreateDialog: () => void;
+  expenseOpType: ExpenseOpType;
 
 } 
 
@@ -42,12 +51,17 @@ export const HomeViewContext = createContext<HomeViewContext>({
   endDate: endDate,
   fetchData: () => {},
   postExpense: (payload: any) => {},
+  putExpense: (payload: any) => {},
   deleteExpense: (id: number, date: string, isRecurrent: boolean) => {},
   extractExpenses: ():Expense[]  =>  [],
   expenseModalOpen: false,
   showHideExpense: (isOpen: boolean) => {},
   expenseId: null,
   setExpenseId: (id: number | null) => {},
+  currentExpense: null,
+  populateExpenseUpdateDialog: (id: number) =>  {},
+  populateExpenseCreateDialog: () => {},
+  expenseOpType: 'create',
 });
   
 export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({children}) => {
@@ -59,12 +73,14 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
     setExpenseModalOpen(isOpen);
   }
   const [expenseId, setExpenseId] = useState<number|null>(null);
+  const [currentExpense, setCurrentExpense] = useState<any|null>(null); //TODO: use type
+  const [expenseOpType, setExpenseOpType] = useState<ExpenseOpType>('create');
   
   const fetchData = async () => {
     try {
       setLoading(true);
-      //TDOD: add date range. Hardcoding to testing only!
-      const response = await fetch((HOME_VIEW_API + '?from=2023-04-01&to=2023-07-01'), {
+      //TDDO: add date range. Hardcoding to testing only!
+      const response = await fetch(('/' + HOME_VIEW_API + '?from=2023-04-01&to=2023-07-01'), {
         headers: {
            Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
@@ -85,7 +101,7 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
   const postExpense = async (payload: any) => { //TODO add type
     try {
       setLoading(true);
-      const response = await fetch((EXPENSE_POST_API), {
+      const response = await fetch(('/' + EXPENSE_POST_API), {
         method: "POST",
         headers: {
            Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -104,11 +120,34 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
     }
   }
 
+  const putExpense = async (payload: any) => { //TODO add type
+    try {
+      setLoading(true);
+      const response = await fetch(('/' + EXPENSE_POST_API), {
+        method: "PUT",
+        headers: {
+           Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+            accept: 'text/plain',
+            'accept-encoding': 'gzip, deflate, br', 
+        },
+        body: JSON.stringify(payload, null, 2)
+      });      
+      await fetchData();
+      
+    } catch (error: any) {
+      setError(error?.message || 'Error occured during put expense');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
   const deleteExpense = async (id: number, date: string, isRecurrent: boolean ) => { //TODO add type 
     try {
       setLoading(true);
-      const baseDeleteUrl = EXPENSE_POST_API + '/' + id + '/' + 0;
-      const url = isRecurrent ? baseDeleteUrl : baseDeleteUrl + '/' + date;
+      const baseDeleteUrl = '/' + EXPENSE_POST_API + '/' + id;
+      const url = isRecurrent ? baseDeleteUrl + '/0': baseDeleteUrl + '/' + date;
       const response = await fetch((url), {
         method: "DELETE",
         headers: {
@@ -118,6 +157,7 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
               'accept-encoding': 'gzip, deflate, br', 
           },
       });
+      console.log('DElete in contxt done:::')
       await fetchData();
     } catch (error: any) {
       setError(error?.message || 'Error occured during delete expense');
@@ -125,6 +165,41 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
       setLoading(false);
     }
   }
+
+  const populateExpenseCreateDialog = () => {
+    setCurrentExpense(null);
+    setExpenseOpType('create');
+    setExpenseModalOpen(true);
+  }
+
+  const populateExpenseUpdateDialog = async (id: number) => {
+    console.log('populateExpenseUpdateDialog id:::', id);
+    try {
+      setLoading(true);
+      console.log('populateExpenseUpdateDialog setloADING:::');
+      const response = await fetch(('/' + EXPENSE_POST_API + '/' + id + '/view'), {
+        headers: {  
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          }
+      });
+      console.log('populateExpenseUpdateDialog response:::', response);
+      const data = await response.json();
+      console.log('populateExpenseUpdateDialog data before ok:::', data);
+      if (response.ok) {
+        console.log('populateExpenseUpdateDialog data after ok:::', data);
+        setCurrentExpense(data);
+        setExpenseOpType('update');
+        setExpenseModalOpen(true);
+      } else {
+        throw new Error('Error occurred while fetching expense details');
+      }
+    } catch (error: any) {
+      setError(error?.message || 'Error occured while fetching expense details');
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   const extractExpenses = (): Expense[] => {
     const temp1: Record<string, any>  = data?.MoneyMovements?.Expenses?.List;
@@ -140,12 +215,17 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
     endDate,
     fetchData,
     postExpense,
+    putExpense,
     deleteExpense,
     extractExpenses,
     expenseModalOpen,
     showHideExpense,
     expenseId,
     setExpenseId,
+    currentExpense,
+    populateExpenseUpdateDialog,
+    populateExpenseCreateDialog,
+    expenseOpType,
   };
 
   return (

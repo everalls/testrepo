@@ -9,10 +9,10 @@ export const CircularIndicator = () =>  {
   if (loading) {
     return (     
       <div style={{
-        position: 'absolute',
-        top: '50%',
+        position: 'fixed',
+        top: '200px',
         left: '50%',
-        transform: 'translate(-50%, -50%)',
+        transform: 'translate(-50%)',
       }}      
       >
         <CircularProgress thickness={2}/>
