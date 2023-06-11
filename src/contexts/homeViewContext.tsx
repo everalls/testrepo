@@ -123,7 +123,7 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
   const putExpense = async (payload: any) => { //TODO add type
     try {
       setLoading(true);
-      const response = await fetch((EXPENSE_POST_API), {
+      const response = await fetch(('/' + EXPENSE_POST_API), {
         method: "PUT",
         headers: {
            Authorization: `Bearer ${localStorage.getItem('token')}`,

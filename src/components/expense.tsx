@@ -247,7 +247,7 @@ export const Expense = () =>  {
                   "Amount":amount,
                   "Name":name,
                   "Description": name,  //TODO add description field
-                  "ExpenseDate": expenseDate?.toISOString(),
+                  "MovementsDate": expenseDate?.toISOString(),
                   "Recurrence":{
                     "RecurrenceTypeId": Number(recurrenceTypeId),
                     "StartDate": startDate?.toISOString(),
@@ -258,7 +258,7 @@ export const Expense = () =>  {
                   }
                 } 
               ]
-              expenseOpType === 'create' ? postExpense(payload) : putExpense({...payload, Id: currentExpense.Id});
+              expenseOpType === 'create' ? postExpense(payload) : putExpense([{...payload[0], Id: currentExpense.Id}]);
               showHideExpense(false);
               resertForm();
             }}
