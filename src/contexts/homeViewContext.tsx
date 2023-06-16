@@ -76,9 +76,12 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
   
 
   const fetchData = () => {
+    console.log('mockdata:::', homeViewMock)
     setLoading(true);
     setData(homeViewMock);
+    console.log('set mockdata:::', data)
     setTimeout(() => {
+      console.log('Setting loading to false')
       setLoading(false);
     }, 300);
   }
