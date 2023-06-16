@@ -5,7 +5,7 @@ import { Expenses } from "./components/Expenses/expenses";
 import { RecurrentExpenses } from "./components/RecurrentExpenseInstances/recurrentExpenses";
 
 export const AppRouter = () => {
-  const basename = '/my-app';
+  const basename = '/bcontrol-backup';
   return (
     <BrowserRouter basename={basename}>
       <Routes>
