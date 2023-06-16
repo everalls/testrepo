@@ -1,9 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { HomeView, getUrl, HOME_VIEW_API, EXPENSE_POST_API, Expense } from "../types";
 import dayjs, { Dayjs } from 'dayjs';
-import { log } from "console";
-import { type } from "os";
-
+import { homeViewMock } from "../mocks/homeViewMock";
 type ExpenseOpType = 'create' | 'update';
 
 
@@ -76,7 +74,16 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
   const [currentExpense, setCurrentExpense] = useState<any|null>(null); //TODO: use type
   const [expenseOpType, setExpenseOpType] = useState<ExpenseOpType>('create');
   
-  const fetchData = async () => {
+
+  const fetchData = () => {
+    setLoading(true);
+    setData(homeViewMock);
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+  }
+
+  const fetchData_ = async () => {
     try {
       setLoading(true);
       //TDDO: add date range. Hardcoding to testing only!
