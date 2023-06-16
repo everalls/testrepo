@@ -5,8 +5,9 @@ import { Expenses } from "./components/Expenses/expenses";
 import { RecurrentExpenses } from "./components/RecurrentExpenseInstances/recurrentExpenses";
 
 export const AppRouter = () => {
+  const basename = '/my-app';
   return (
-    <BrowserRouter basename={process.env.REACT_APP_URI}>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<MainApp />} />
         <Route path="/expenses" element={<Expenses />} />
