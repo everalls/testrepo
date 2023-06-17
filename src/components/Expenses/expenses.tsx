@@ -7,8 +7,14 @@ import { ExpensesList } from './expensesList';
 import { log } from 'console';
 import { logDOM } from '@testing-library/react';
 import { Expense } from '../../types';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { IconButton, InputAdornment, Menu, MenuItem, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import SortIcon from '@mui/icons-material/Sort';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+
+dayjs.extend(advancedFormat);
+
 
 
 export const Expenses = () => {
@@ -35,6 +41,9 @@ export const Expenses = () => {
   // }, [data]);
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortOption, setSortOption] = useState('date'); // Initial sort option
+  const [sortMenuAnchor, setSortMenuAnchor] = useState(null); // Anchor element for the sort menu
+
 
   const filterExpenses = (expenses: Expense[]) => { //TODO use type
     return expenses.filter((expense) =>
@@ -42,10 +51,36 @@ export const Expenses = () => {
     );
   };
 
+  const handleSortMenuOpen = (event: any) => {
+    setSortMenuAnchor(event.currentTarget);
+  };
+
+  const handleSortOptionSelect = (option: any) => {
+    setSortOption(option);
+    setSortMenuAnchor(null); // Close the sort menu
+  };
+
   const filteredExpenses = useMemo(() => filterExpenses(extractExpenses()), [
     data,
     searchQuery,
   ]);
+
+  const sortedExpenses = useMemo(() => {
+    // Apply sorting logic based on the selected sort option
+    let sorted = [...filteredExpenses]; // Make a copy of the filtered expenses
+
+    if (sortOption === 'date') {
+      sorted.sort((a, b) =>
+        dayjs(a.Date).isBefore(dayjs(b.Date)) ? -1 : 1
+      );
+    } else if (sortOption === 'name') {
+      console.log('sorted by name:::');
+      console.log('Sorted before:::', sorted);
+      sorted.sort((a, b) => a.Name.localeCompare(b.Name)); // Sort by name
+    }
+
+    return sorted;
+  }, [filteredExpenses, sortOption]);
   
   if (error) {
     return <div>{error || 'Error occured'}</div>
@@ -75,8 +110,30 @@ export const Expenses = () => {
           ),
         }}
       />
+
+      <IconButton onClick={handleSortMenuOpen}>
+          <SortIcon />
+        </IconButton>
+        <Menu
+          anchorEl={sortMenuAnchor}
+          open={Boolean(sortMenuAnchor)}
+          onClose={() => setSortMenuAnchor(null)}
+        >
+          <MenuItem
+            onClick={() => handleSortOptionSelect('date')}
+            selected={sortOption === 'date'}
+          >
+            Sort by Date
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleSortOptionSelect('name')}
+            selected={sortOption === 'name'}
+          >
+            Sort by Name
+          </MenuItem>
+        </Menu>
       </div>
-      <ExpensesList expenses={filteredExpenses}/>
+      <ExpensesList expenses={sortedExpenses}/>
     </>
   );
 }
