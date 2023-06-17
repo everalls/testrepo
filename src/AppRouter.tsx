@@ -5,8 +5,10 @@ import { Expenses } from "./components/Expenses/expenses";
 import { RecurrentExpenses } from "./components/RecurrentExpenseInstances/recurrentExpenses";
 
 export const AppRouter = () => {
+  //const basename = '/bcontrol-backup';
+  const basename = '/';
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<MainApp />} />
         <Route path="/expenses" element={<Expenses />} />
