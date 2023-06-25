@@ -75,7 +75,7 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
   const [expenseOpType, setExpenseOpType] = useState<ExpenseOpType>('create');
   
 
-  const fetchData_ = () => {
+  const fetchData = () => {
     console.log('mockdata:::', homeViewMock)
     setLoading(true);
     setData(homeViewMock);
@@ -86,7 +86,7 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
     }, 300);
   }
 
-  const fetchData = async () => {
+  const fetchData_ = async () => {
     try {
       setLoading(true);
       //TDDO: add date range. Hardcoding to testing only!

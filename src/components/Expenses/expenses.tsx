@@ -92,6 +92,7 @@ export const Expenses = () => {
         display: 'flex',
         flexDirection: 'row',
         marginTop: '16px',
+        marginBottom: '16px',
         justifyContent: 'flex-start',
         paddingLeft: '16px'
       }}>

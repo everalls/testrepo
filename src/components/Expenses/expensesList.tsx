@@ -45,6 +45,8 @@ export  const ExpensesList = (props: ExpensesListProps) => {
           width: '100%',
           padding: '16px',
           boxSizing: 'border-box',
+          flex: 1,
+          overflowY: 'auto',
          }}
         
     >

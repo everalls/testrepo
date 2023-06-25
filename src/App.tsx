@@ -7,18 +7,24 @@ import { TopBar } from './components/TopBar/topBar';
 
 
 function App() {
-  const value = 18000;
   return (
     
     <HomeViewProvider>
       <div className="app-container">
-        <TopBar />
+        <div className="top-bar-container">
+          <TopBar />
+        </div>  
+
+        {/* outlet, main cotent */}
         <div className="outlet">
           <AppRouter />
         </div>
-        <Expense/>
-        <CircularIndicator/>
+
       </div>
+
+      {/* modal dialogs */}
+      <Expense/>
+      <CircularIndicator/>
     </HomeViewProvider>
 
   );
