@@ -1,32 +1,37 @@
 import './App.css';
-import { HomeViewProvider } from './contexts/homeViewContext';
 import { AppRouter } from './AppRouter';
-import { Expense } from './components/expense';
-import { CircularIndicator } from './components/circularIndicator';
 import { TopBar } from './components/TopBar/topBar';
+import { CircularIndicator } from './components/circularIndicator';
+import { Expense } from './components/expense';
+import { HomeViewProvider } from './contexts/homeViewContext';
 
 
 function App() {
-  return (
-    
-    <HomeViewProvider>
-      <div className="app-container">
-        <div className="top-bar-container">
-          <TopBar />
-        </div>  
 
-        {/* outlet, main cotent */}
-        <div className="outlet">
-          <AppRouter />
+  //const {data, loading, error, fetchData } = useContext(HomeViewContext);
+  
+  
+  return (
+    <>
+      <HomeViewProvider>
+        <div className="app-container">
+          <div className="top-bar-container">
+            <TopBar />
+          </div>  
+
+          {/* outlet, main cotent */}
+          <div className="outlet">
+            <AppRouter />
+            
+          </div>
+
         </div>
 
-      </div>
-
-      {/* modal dialogs */}
-      <Expense/>
-      <CircularIndicator/>
-    </HomeViewProvider>
-
+        {/* modal dialogs */}
+        <Expense/>
+        <CircularIndicator/>
+      </HomeViewProvider>
+    </>
   );
 }
 

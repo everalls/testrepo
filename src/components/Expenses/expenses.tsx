@@ -1,17 +1,13 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { HomeViewContext } from '../../contexts/homeViewContext';
-import '../../App.css';
-import ImageGraph from '../../assets/graph.svg';
-import { PeriodMenu } from '../periodMenu';
-import { ExpensesList } from './expensesList';
-import { log } from 'console';
-import { logDOM } from '@testing-library/react';
-import { Expense } from '../../types';
-import { IconButton, InputAdornment, Menu, MenuItem, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SortIcon from '@mui/icons-material/Sort';
+import { IconButton, InputAdornment, Menu, MenuItem, TextField } from '@mui/material';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { useContext, useMemo, useState } from 'react';
+import '../../App.css';
+import { HomeViewContext } from '../../contexts/homeViewContext';
+import { Expense } from '../../types';
+import { ExpensesList } from './expensesList';
 
 dayjs.extend(advancedFormat);
 
@@ -20,25 +16,6 @@ dayjs.extend(advancedFormat);
 export const Expenses = () => {
 
   const {data, error, fetchData, extractExpenses } = useContext(HomeViewContext);
-
-  //Work-around to avoid calling the callback in useEffect twise.
-  //It happens because of the way React 18 renders components in development mode, in strict mode.
-  //Solution from here: https://stackoverflow.com/questions/72406486/react-fetch-api-being-called-2-times-on-page-load
-  // const renderAfterCalled = useRef(false);
-
-  // useEffect(() => {
-  //   if (!renderAfterCalled.current) {
-  //     fetchData();
-  //   }
-  //   renderAfterCalled.current = true;
-  // }, []);
-
-
-  // const expenses = useMemo(() => {
-  //   const exp = extractExpenses();
-  //   console.log('Expenses: ', exp);
-  //   return exp;
-  // }, [data]);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState('date'); // Initial sort option
@@ -66,6 +43,7 @@ export const Expenses = () => {
   ]);
 
   const sortedExpenses = useMemo(() => {
+    console.log('data from expenses.tsx:::', data);
     // Apply sorting logic based on the selected sort option
     let sorted = [...filteredExpenses]; // Make a copy of the filtered expenses
 

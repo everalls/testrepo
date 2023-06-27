@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { HomeView, getUrl, HOME_VIEW_API, EXPENSE_POST_API, Expense } from "../types";
 import dayjs, { Dayjs } from 'dayjs';
 import { homeViewMock } from "../mocks/homeViewMock";
@@ -83,7 +83,7 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
     setTimeout(() => {
       console.log('Setting loading to false')
       setLoading(false);
-    }, 300);
+    }, 0);
   }
 
   const fetchData_ = async () => {
@@ -212,7 +212,7 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
 
 
   const extractExpenses = (): Expense[] => {
-    const temp1: Record<string, any>  = data?.MoneyMovements?.Expenses?.List;
+    const temp1: Record<string, any>  = data?.MoneyMovements?.Expenses?.List || {};
     return Object.keys(temp1).reduce((result: Expense[], key: string) =>  [...result, ...temp1[key].Data.map((item: any) => {item['Date'] = key; return item})], []);
   }
 
@@ -237,6 +237,18 @@ export const HomeViewProvider: React.FC<HomeViewContextProviderProps> = ({childr
     populateExpenseCreateDialog,
     expenseOpType,
   };
+
+  //Work-around to avoid calling the callback in useEffect twise.
+  //It happens because of the way React 18 renders components in development mode, in strict mode.
+  //Solution from here: https://stackoverflow.com/questions/72406486/react-fetch-api-being-called-2-times-on-page-load
+  const renderAfterCalled = useRef(false);
+
+  useEffect(() => {
+    if (!renderAfterCalled.current) {
+      fetchData();
+    }
+    renderAfterCalled.current = true;
+  }, []);
 
   return (
     <HomeViewContext.Provider value={contextvalue}>

@@ -20,7 +20,6 @@ export  const RecurrentExpenses = (props: RecurrentExpensesProps) => {
 
   const recurrentExpenses = useMemo(() => {
     const filteredExpenses = id ? extractExpenses().filter((expense: Expense) => expense.Id === Number(id)) : [];
-    console.log('filteredExpenses', filteredExpenses);
     return filteredExpenses;
   }, [data]);
 
